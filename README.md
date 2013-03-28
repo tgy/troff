@@ -1,4 +1,4 @@
-TROFF
+TROFF © All Rights Reserved - EPITA - http://epita.fr
 =====
 
 TROFF is a tron-like keyboard-only 2D game realised in C# by students from the Computer Science Engineering school EPITA in Paris, France.
