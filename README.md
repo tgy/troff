@@ -6,7 +6,7 @@ TROFF is a tron-like keyboard-only 2D game realised in C# by students from the C
 
 The team
 -------
-* Valentin Iovene (toogy)
+* Valentin Iovene (toogy) http://toogy.fr
 * William Fabre (Tchii)
 * Arthur D'Avray
 * Julien Chenglee Miyamoto
