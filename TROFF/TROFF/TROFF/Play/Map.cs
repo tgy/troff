@@ -3,16 +3,16 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TROFF.Play
 {
-    public class Map
+    public static class Map
     {
-        public byte[,] Cells = new byte[200, 150];
+        public static byte[,] Cells = new byte[200, 150];
         
-        public void Update(GameTime gameTime)
+        public static void Update(GameTime gameTime)
         {
 
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public static void Draw(SpriteBatch spriteBatch)
         {
             for (int x = 0; x < 200; x++)
                 for (int y = 0; y < 150; y++)

@@ -39,11 +39,13 @@ namespace TROFF
             _graphics.PreferredBackBufferWidth = 801;
             _graphics.PreferredBackBufferHeight = 601;
             _graphics.ApplyChanges();
+            Data.Ww = Window.ClientBounds.Width;
+            Data.Wh = Window.ClientBounds.Height;
 
             Data.PKs = Keyboard.GetState();
             Data.Ks = Keyboard.GetState();
 
-            PlayState p = new PlayState();
+            PlayState p = new PlayState(true, "John");
 
             Data.GameStates = new Stack<GameState>();
             Data.GameStates.Push(p);
