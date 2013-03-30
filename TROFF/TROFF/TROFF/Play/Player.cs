@@ -6,108 +6,73 @@ namespace TROFF.Play
 {
     public class Player
     {
-        public string Name;
-        public byte Id;
-        public bool Dead;
-        public int Timer;
+        public string Name { get; private set; }
+        public byte Id { get; private set; }
+        public bool Dead { get; private set; }
+        private int _timer;
 
-        public Point Position;
-        public Direction Direction;
+        private Point _position;
+        private Direction _direction;
 
         public Player(string name, byte id, Point position, Direction direction)
         {
             Name = name;
             Id = id;
-            Position = position;
-            Direction = direction;
-            Timer = 0;
+            _position = position;
+            _direction = direction;
+            _timer = 0;
         }
 
         public void Update(GameTime gameTime)
         {
-            Timer++;
-            if (Data.GameFocus && Id == 2)
+            CheckDeath();
+            _timer++;
+            if (Data.GameFocus)
             {
                 if (Data.PKs.IsKeyDown(Keys.Left) && Data.Ks.IsKeyUp(Keys.Left))
                 {
-                    Direction newDirection = new Direction();
-                    switch (Direction)
-                    {
-                        case Direction.North:
-                            newDirection = Direction.West;
-                            break;
-                        case Direction.East:
-                            newDirection = Direction.North;
-                            break;
-                        case Direction.South:
-                            newDirection = Direction.East;
-                            break;
-                        case Direction.West:
-                            newDirection = Direction.South;
-                            break;
-                    }
-                    Direction = newDirection;
-                    Timer = 0;
+                    _direction = (int)(_direction - 1) < 0 ? (Direction)3 : (Direction)((int)(_direction - 1));
                 }
 
                 else if (Data.PKs.IsKeyDown(Keys.Right) && Data.Ks.IsKeyUp(Keys.Right))
                 {
-                    Direction newDirection = new Direction();
-                    switch (Direction)
-                    {
-                        case Direction.North:
-                            newDirection = Direction.East;
-                            break;
-                        case Direction.East:
-                            newDirection = Direction.South;
-                            break;
-                        case Direction.South:
-                            newDirection = Direction.West;
-                            break;
-                        case Direction.West:
-                            newDirection = Direction.North;
-                            break;
-                    }
-                    Direction = newDirection;
-                    Timer = 0;
+                    _direction = (Direction)(((int)_direction + 1) % 4);
                 }
             }
 
-            if (Timer == 3)
+            if (_timer == 3)
             {
-                Map.Cells[Position.X, Position.Y] = Id;
-                switch (Direction)
+                Map.Cells[_position.X, _position.Y] = Id;
+                switch (_direction)
                 {
                     case Direction.North:
-                        Position.Y--;
+                        _position.Y--;
                         break;
                     case Direction.East:
-                        Position.X++;
+                        _position.X++;
                         break;
                     case Direction.South:
-                        Position.Y++;
+                        _position.Y++;
                         break;
                     case Direction.West:
-                        Position.X--;
+                        _position.X--;
                         break;
                 }
-                Timer = 0;
+                _timer = 0;
             }
-
-            CheckDeath();
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Id == 1 ? Textures.Color1 : Textures.Color2, new Rectangle(Position.X * 4, Position.Y * 4, 4, 4), Color.White);
-            spriteBatch.Draw(Id == 1 ? Textures.Light1 : Textures.Light2, new Rectangle(Position.X * 4 - 6, Position.Y * 4 - 6, 16, 16), Color.White);
+
+            spriteBatch.Draw(Id == 1 ? Textures.Light1 : Textures.Light2, new Rectangle(_position.X * 4 - 6, _position.Y * 4 - 6, 16, 16), Color.White);
         }
 
         public void CheckDeath()
         {
-            Dead = Position.X < 0 || Position.X > Map.Cells.GetLength(0) || Position.Y < 0 ||
-                   Position.Y > Map.Cells.GetLength(1) ||
-                   Map.Cells[Position.X, Position.Y] != 0;
+            Dead = _position.X < 0 || _position.X >= Map.Cells.GetLength(0) || _position.Y < 0 ||
+                   _position.Y >= Map.Cells.GetLength(1) ||
+                   Map.Cells[_position.X, _position.Y] != 0;
         }
     }
 
@@ -115,7 +80,7 @@ namespace TROFF.Play
     {
         North,
         East,
-        West,
-        South
+        South,
+        West
     }
 }

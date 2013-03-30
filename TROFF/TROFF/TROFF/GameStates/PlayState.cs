@@ -6,12 +6,13 @@ namespace TROFF.GameStates
 {
     class PlayState : GameState
     {
-        private Player _current, _enemy;
+        private readonly Player _current;
+        private readonly Player _enemy;
 
         public PlayState(bool client, string currentName)
         {
-            _current = new Player(currentName, 1, new Point(20, 75), Direction.East);
-            _enemy = new Player("P2", 2, new Point(180, 75), Direction.West);
+            _current = new Player(currentName, 1, new Point(0, 75), Direction.East);
+            _enemy = new Player("P2", 2, new Point(199, 75), Direction.West);
         }
 
         public override void Initialize()

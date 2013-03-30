@@ -17,7 +17,9 @@ namespace TROFF
         public static Texture2D Color1, Color2;
         public static Texture2D Light1, Light2;
 
-        public static ButtonTextures Create, Join, Quit, Help, ComeBack;
+        public static ButtonTextures Create, Join, Quit, Help, ComeBack, TextBox;
+
+        public static Texture2D Cursor;
 
         public static void Initialize(ContentManager content)
         {
@@ -31,15 +33,18 @@ namespace TROFF
             Quit = new ButtonTextures("Quit", content);
             Help = new ButtonTextures("Help", content);
             ComeBack = new ButtonTextures("ComeBack", content);
+            TextBox = new ButtonTextures("TextBox", content);
 
             Color1 = content.Load<Texture2D>("Color1");
             Color2 = content.Load<Texture2D>("Color2");
             Light1 = content.Load<Texture2D>("Light1");
             Light2 = content.Load<Texture2D>("Light2");
+
+            Cursor = content.Load<Texture2D>("Cursor");
         }
     }
 
-    public class ButtonTextures
+    public struct ButtonTextures
     {
         public Texture2D Base, Focus;
 

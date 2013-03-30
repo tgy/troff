@@ -111,10 +111,10 @@
     <Compile Include="Fonts.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="GameStates\GameOverState.cs" />
-    <Compile Include="Menu\Button.cs" />
+    <Compile Include="Menu\MenuButton.cs" />
     <Compile Include="Menu\MenuItem.cs" />
     <Compile Include="GameStates\MenuState.cs" />
-    <Compile Include="Menu\TextBox.cs" />
+    <Compile Include="Menu\MenuTextBox.cs" />
     <Compile Include="Play\Map.cs" />
     <Compile Include="Play\Player.cs" />
     <Compile Include="GameStates\PlayState.cs" />

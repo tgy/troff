@@ -5,7 +5,12 @@ namespace TROFF.Play
 {
     public static class Map
     {
-        public static byte[,] Cells = new byte[200, 150];
+        public static byte[,] Cells;
+
+        public static void Initialize()
+        {
+            Cells = new byte[200, 150];
+        }
         
         public static void Update(GameTime gameTime)
         {

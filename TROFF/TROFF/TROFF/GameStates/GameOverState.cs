@@ -10,8 +10,8 @@ namespace TROFF.GameStates
 {
     class GameOverState : GameState
     {
-        private string _textDisplayed;
-        private Color _textColor;
+        private readonly string _textDisplayed;
+        private readonly Color _textColor;
 
         public GameOverState(string winner, byte id)
         {

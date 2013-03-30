@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using TROFF.GameStates;
+using TROFF.Menu;
+using TROFF.Play;
 
 namespace TROFF
 {
@@ -45,10 +47,44 @@ namespace TROFF
             Data.PKs = Keyboard.GetState();
             Data.Ks = Keyboard.GetState();
 
-            PlayState p = new PlayState(true, "John");
+            //
+
+            MenuButton comeBackButton = new MenuButton(Textures.ComeBack);
+            comeBackButton.Click = ComeBack;
+
+            MenuButton homeMenuHelpButton = new MenuButton(Textures.Help);
+            MenuButton homeMenuCreateButton = new MenuButton(Textures.Create);
+            MenuButton homeMenuJoinButton = new MenuButton(Textures.Join);
+            MenuButton homeMenuQuitButton = new MenuButton(Textures.Quit);
+            MenuState homeMenu = new MenuState(new List<MenuItem> { homeMenuHelpButton, homeMenuCreateButton, homeMenuJoinButton, homeMenuQuitButton }, Textures.MenuBackground, 1);
+            homeMenu.SetPositions(230);
+
+            MenuTextBox createMenuNameTextBox = new MenuTextBox("Give me your name or I kill you");
+            MenuButton createMenuCreate = new MenuButton(Textures.Create);
+            MenuState createMenu = new MenuState(new List<MenuItem> { createMenuNameTextBox, createMenuCreate }, Textures.MenuBackground);
+            createMenu.SetPositions(280);
+
+            MenuTextBox joinMenuNameTextBox = new MenuTextBox("Give me your name or I kill you");
+            MenuTextBox joinMenuIpTextBox = new MenuTextBox("IP Adress of your friend");
+            MenuButton joinMenuJoin = new MenuButton(Textures.Join);
+            MenuState joinMenu = new MenuState(new List<MenuItem> { joinMenuNameTextBox, joinMenuIpTextBox, joinMenuJoin }, Textures.MenuBackground);
+            joinMenu.SetPositions(250);
+
+            MenuState helpMenu = new MenuState(new List<MenuItem> { comeBackButton }, Textures.HelpBackground);
+            helpMenu.SetPositions(410);
+
+            homeMenuHelpButton.SubMenu = helpMenu;
+            homeMenuHelpButton.Click = RollOut;
+            homeMenuCreateButton.SubMenu = createMenu;
+            homeMenuCreateButton.Click = RollOut;
+            homeMenuJoinButton.SubMenu = joinMenu;
+            homeMenuJoinButton.Click = RollOut;
+            homeMenuQuitButton.Click = Quit;
+
+            createMenuCreate.Click = LaunchGame;
 
             Data.GameStates = new Stack<GameState>();
-            Data.GameStates.Push(p);
+            Data.GameStates.Push(homeMenu);
             Data.GameStates.Peek().Initialize();
         }
 
@@ -61,6 +97,9 @@ namespace TROFF
         {
             Data.GameFocus = IsActive;
             Data.Ks = Keyboard.GetState();
+
+            if (Data.PKs.IsKeyDown(Keys.Escape) && Data.Ks.IsKeyUp(Keys.Escape) && Data.GameStates.Count > 1 && Data.GameStates.Peek() is MenuState)
+                Data.GameStates.Pop();
 
             Data.GameStates.Peek().Update(gameTime);
 
@@ -77,6 +116,34 @@ namespace TROFF
 
             _spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        // Button onClick functions
+
+        private static void ComeBack(MenuState m)
+        {
+            if (Data.GameStates.Count > 1)
+                Data.GameStates.Pop();
+        }
+
+        private static void Quit(MenuState m)
+        {
+            Environment.Exit(0);
+        }
+
+        private static void RollOut(MenuState m)
+        {
+            Data.GameStates.Push(m);
+            Data.GameStates.Peek().Initialize();
+        }
+
+        private static void LaunchGame(MenuState m)
+        {
+            Map.Initialize();
+            string name = ((MenuTextBox) ((MenuState) Data.GameStates.Peek()).Items[0]).Value;
+            var p = new PlayState(true, name);
+            p.Initialize();
+            Data.GameStates.Push(p);
         }
     }
 }
