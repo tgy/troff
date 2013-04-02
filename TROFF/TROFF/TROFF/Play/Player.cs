@@ -30,14 +30,10 @@ namespace TROFF.Play
             if (Data.GameFocus)
             {
                 if (Data.PKs.IsKeyDown(Keys.Left) && Data.Ks.IsKeyUp(Keys.Left))
-                {
                     _direction = (int)(_direction - 1) < 0 ? (Direction)3 : (Direction)((int)(_direction - 1));
-                }
 
                 else if (Data.PKs.IsKeyDown(Keys.Right) && Data.Ks.IsKeyUp(Keys.Right))
-                {
                     _direction = (Direction)(((int)_direction + 1) % 4);
-                }
             }
 
             if (_timer == 3)
