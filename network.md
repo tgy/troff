@@ -19,5 +19,5 @@
 	{ LobbyState context }
 	* create the players list
 	* start listening on the chosen port
-	* add all the clients who are sending a string
-	* start a PlayState when button pressed
+	* add all the clients who are sending a string and associate them their numbers
+	* start a PlayState when button pressed with the players in the lobby
