@@ -1,19 +1,23 @@
-Networking
-============
+# Networking
 
-Player _current
-List<Player> _players
+## PACKETS
 
-Server
---------
+#### SYNCING
 
-	while(true)
-	{
-		foreach(Player p in _players)
-		{
-			> verify if p is still connected to the server. If not, react consequently
-			> get p's current position and direction, sync with the local instance of the player
-			> sync the map with p's new direction and position
-			> send the new version of the map to the player
-		}
-	}
+	10 bytes sent
+	* [1] BYTE -> player's number
+	* [2] BYTE -> player's direction
+	* [3-6] SHORT -> player's X position
+	* [7-10] SHORT -> player's Y position
+
+#### LOBBY JOINING
+
+	Just the string of the player who joins
+	
+## LOBBY CREATION
+
+	{ LobbyState context }
+	* create the players list
+	* start listening on the chosen port
+	* add all the clients who are sending a string and associate them their numbers
+	* start a PlayState when button pressed with the players in the lobby
