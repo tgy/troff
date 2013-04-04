@@ -115,6 +115,17 @@
     <Compile Include="Menu\MenuItem.cs" />
     <Compile Include="GameStates\MenuState.cs" />
     <Compile Include="Menu\MenuTextBox.cs" />
+    <Compile Include="Network\Client.cs" />
+    <Compile Include="Network\Events\Event.cs" />
+    <Compile Include="Network\Events\NewPlayerEvent.cs" />
+    <Compile Include="Network\Events\SyncEvent.cs" />
+    <Compile Include="Network\Packet.cs" />
+    <Compile Include="Network\PacketHeader.cs" />
+    <Compile Include="Network\Packets\BasePacket.cs" />
+    <Compile Include="Network\Packets\NewPlayerPacket.cs" />
+    <Compile Include="Network\Packets\SyncPacket.cs" />
+    <Compile Include="Network\Parser.cs" />
+    <Compile Include="Network\Server.cs" />
     <Compile Include="Play\Map.cs" />
     <Compile Include="Play\Player.cs" />
     <Compile Include="GameStates\PlayState.cs" />
@@ -160,9 +171,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Network\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--
