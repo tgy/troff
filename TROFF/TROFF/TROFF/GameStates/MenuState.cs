@@ -45,13 +45,13 @@ namespace TROFF.GameStates
             foreach (var menuItem in Items)
                 menuItem.SetPosition(0, 0);
 
-            Items[0].SetPosition((Data.Ww - Items[0].Area.Width) / 2, startY);
+            Items[0].SetPosition((Data.Ww - Items[0].Area.Width)/2, startY);
 
             for (var i = 1; i < Items.Count; i++)
             {
                 var x = Items[i - 1].Area.X;
                 if (Items[i - 1].Area.Width != Items[i].Area.Width)
-                    x = x + (Items[i - 1].Area.Width - Items[i].Area.Width) / 2;
+                    x = x + (Items[i - 1].Area.Width - Items[i].Area.Width)/2;
                 int z = Items[i - 1] is MenuTextBox && Items[i] is MenuTextBox ? 25 : 0;
                 Items[i].SetPosition(x, Items[i - 1].Area.Y + Items[i - 1].Area.Height + 10 + z);
             }

@@ -6,7 +6,7 @@ namespace TROFF.Play
 {
     public class Player
     {
-        public string Name { get; private set; }
+        public string Name;
         public byte Id { get; private set; }
         public bool Dead { get; private set; }
         private int _timer;
@@ -14,12 +14,12 @@ namespace TROFF.Play
         private Point _position;
         private Direction _direction;
 
-        public Player(string name, byte id, Point position, Direction direction)
+        public Player(string name, byte id)
         {
             Name = name;
             Id = id;
-            _position = position;
-            _direction = direction;
+            _direction = Id == 1 ? Direction.East : Direction.West;
+            _position = Id == 1 ? new Point(5, 75) : new Point(194, 75);
             _timer = 0;
         }
 

@@ -9,10 +9,10 @@ namespace TROFF.GameStates
         private readonly Player _current;
         private readonly Player _enemy;
 
-        public PlayState(bool client, string currentName)
+        public PlayState(Player current, Player enemey)
         {
-            _current = new Player(currentName, 1, new Point(0, 75), Direction.East);
-            _enemy = new Player("P2", 2, new Point(199, 75), Direction.West);
+            _current = current;
+            _enemy = enemey;
         }
 
         public override void Initialize()

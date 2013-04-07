@@ -47,7 +47,7 @@ namespace TROFF
             Data.PKs = Keyboard.GetState();
             Data.Ks = Keyboard.GetState();
 
-            //
+            #region menu-creation
 
             MenuButton comeBackButton = new MenuButton(Textures.ComeBack);
             comeBackButton.Click = ComeBack;
@@ -81,7 +81,10 @@ namespace TROFF
             homeMenuJoinButton.Click = RollOut;
             homeMenuQuitButton.Click = Quit;
 
-            createMenuCreate.Click = LaunchGame;
+            createMenuCreate.Click = Create;
+            joinMenuJoin.Click = Join;
+
+            #endregion
 
             Data.GameStates = new Stack<GameState>();
             Data.GameStates.Push(homeMenu);
@@ -137,13 +140,26 @@ namespace TROFF
             Data.GameStates.Peek().Initialize();
         }
 
-        private static void LaunchGame(MenuState m)
+        private static void Create(MenuState m)
         {
             Map.Initialize();
             string name = ((MenuTextBox) ((MenuState) Data.GameStates.Peek()).Items[0]).Value;
-            var p = new PlayState(true, name);
-            p.Initialize();
-            Data.GameStates.Push(p);
+            if (name == "")
+                return;
+            var l = new LobbyState(name, true);
+            l.Initialize();
+            Data.GameStates.Push(l);
+        }
+
+        private static void Join(MenuState m)
+        {
+            Map.Initialize();
+            string name = ((MenuTextBox)((MenuState)Data.GameStates.Peek()).Items[0]).Value;
+            if (name == "")
+                return;
+            var l = new LobbyState(name, false);
+            l.Initialize();
+            Data.GameStates.Push(l);
         }
     }
 }
