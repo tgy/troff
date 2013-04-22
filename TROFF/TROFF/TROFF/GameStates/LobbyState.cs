@@ -15,11 +15,12 @@ namespace TROFF.GameStates
     {
         private readonly MenuButton _readyButton;
 
-        private Player _current, _enemy;
-        private bool _currentRdy, _enemyRdy;
-        private bool _server;
+        private readonly Player _current;
+        private readonly Player _enemy;
+        private bool _currentRdy;
+        private bool _enemyRdy;
 
-        public LobbyState(string currentName, bool server)
+        public LobbyState(string currentName, bool initializer)
         {
             _readyButton = new MenuButton(Textures.Ready)
                 {
@@ -29,10 +30,8 @@ namespace TROFF.GameStates
                                          Textures.Ready.Base.Height)
                 };
 
-            _server = server;
-
-            _current = new Player(currentName, (byte) (server ? 1 : 2));
-            _enemy = new Player(null, (byte)(server ? 2 : 1));
+            _current = new Player(currentName, (byte) (initializer ? 1 : 2));
+            _enemy = new Player(null, (byte)(initializer ? 2 : 1));
         }
 
         private static void Ready(MenuState m)
@@ -48,7 +47,7 @@ namespace TROFF.GameStates
             if (Data.Ks.IsKeyUp(Keys.Enter) && Data.PKs.IsKeyDown(Keys.Enter))
                 _currentRdy = true;
 
-            // if new client who sends a string, define it as the enemyplayer
+            // if !isset enemy and isset new client who sends a string, define it as the enemyplayer
 
             // if isset enemy, listen to a ready packet
 
@@ -61,6 +60,13 @@ namespace TROFF.GameStates
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Textures.LobbyBackground, new Vector2(0, 0), Color.White);
+
+            spriteBatch.DrawString(Fonts.Trebuchet16, _current.Name,
+                                   new Vector2(145, 290), _current.Id == 2 ? new Color(255, 216, 0) : new Color(0, 255, 210));
+
+            spriteBatch.DrawString(Fonts.Trebuchet16Italic, _enemy.Name ?? "Waiting...",
+                                new Vector2(485, 290), _enemy.Id == 2 ? new Color(255, 216, 0) : new Color(0, 255, 210));
+
             _readyButton.Draw(spriteBatch);
         }
     }
