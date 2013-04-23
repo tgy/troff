@@ -12,6 +12,12 @@ namespace TROFF
 
         public static Stack<GameState> GameStates;
 
+        public static void PopToEnd()
+        {
+            while (GameStates.Count > 1)
+                GameStates.Pop();
+        }
+
         public static KeyboardState PKs, Ks; // Previous and current keyboardstates
 
         public static int Ww, Wh; // Windows width and height

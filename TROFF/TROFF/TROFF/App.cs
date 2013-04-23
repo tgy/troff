@@ -33,6 +33,7 @@ namespace TROFF
 
         protected override void LoadContent()
         {
+            IsMouseVisible = true;
             Data.GameFocus = true;
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -146,7 +147,7 @@ namespace TROFF
             string name = ((MenuTextBox) ((MenuState) Data.GameStates.Peek()).Items[0]).Value;
             if (name == "")
                 return;
-            var l = new LobbyState(name, true);
+            var l = new LobbyState(name, null);
             l.Initialize();
             Data.GameStates.Push(l);
         }
@@ -155,9 +156,10 @@ namespace TROFF
         {
             Map.Initialize();
             string name = ((MenuTextBox)((MenuState)Data.GameStates.Peek()).Items[0]).Value;
+            string ipAddress = ((MenuTextBox)((MenuState)Data.GameStates.Peek()).Items[1]).Value;
             if (name == "")
                 return;
-            var l = new LobbyState(name, false);
+            var l = new LobbyState(name, ipAddress);
             l.Initialize();
             Data.GameStates.Push(l);
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Sockets;
 using Microsoft.Xna.Framework;
 using TROFF.Play;
 
@@ -8,11 +9,13 @@ namespace TROFF.GameStates
     {
         private readonly Player _current;
         private readonly Player _enemy;
+        private readonly NetworkStream _stream;
 
-        public PlayState(Player current, Player enemey)
+        public PlayState(Player current, Player enemey, NetworkStream stream)
         {
             _current = current;
             _enemy = enemey;
+            _stream = stream;
         }
 
         public override void Initialize()
@@ -37,8 +40,11 @@ namespace TROFF.GameStates
         {
             Map.Update(gameTime);
 
-            _current.Update(gameTime);
-            _enemy.Update(gameTime);
+            if (_stream.DataAvailable && _stream.ReadByte() == 1)
+                _enemy.Direction = (Direction) _stream.ReadByte();
+
+            _current.Update(gameTime, _stream);
+            _enemy.Update(gameTime, _stream);
 
             CheckOver();
 
