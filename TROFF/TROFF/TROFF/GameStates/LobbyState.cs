@@ -46,7 +46,7 @@ namespace TROFF.GameStates
             {
                 try
                 {
-                    _listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 4242);
+                    _listener = new TcpListener(IPAddress.Parse("0.0.0.0"), 4242);
                     _listener.Start();
                 }
                 catch (Exception)
